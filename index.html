@@ -57,6 +57,10 @@
           <span class="nav-icon">🔄</span>
           <span>Pindahan & NFC</span>
         </div>
+        <div class="nav-item" data-tab="community" id="nav-community">
+          <span class="nav-icon">🤝</span>
+          <span>Kempen & Kesedaran</span>
+        </div>
       </nav>
       
       <div class="sidebar-footer">
@@ -540,8 +544,74 @@
           <button type="button" class="btn-secondary" id="modal-add-pet-cancel">Batal</button>
           <button type="submit" class="btn-primary">Daftar Profil 💾</button>
         </div>
-      </form>
-    </div>
+        <!-- SECTION: COMMUNITY (Kempen & Kesedaran) -->
+        <section class="tab-pane" id="tab-community">
+          <div class="dashboard-grid">
+            <!-- Fundraising Campaigns -->
+            <div class="glass-card">
+              <h2>Kempen Bantuan & Kutipan Dana NGO</h2>
+              <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 16px;">Sumbang untuk perubatan dan penjagaan haiwan terbiar yang dikendalikan oleh rakan NGO kami.</p>
+              
+              <div style="display: flex; flex-direction: column; gap: 16px;">
+                <div style="border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px; background: rgba(255,255,255,0.02);">
+                  <div style="display: flex; gap: 12px; align-items: center;">
+                    <div style="width: 80px; height: 80px; border-radius: var(--radius-sm); overflow: hidden; background: #333;">
+                      <img src="https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=400&q=80" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div style="flex-grow: 1;">
+                      <h4 style="margin: 0; font-size: 15px;">Dana Perubatan Pembedahan Kucing (Bubu)</h4>
+                      <p style="font-size: 12px; color: var(--text-muted); margin: 4px 0;">Oleh: Penyelamat Haiwan Malaysia</p>
+                      <!-- Progress -->
+                      <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; margin-top: 8px; overflow: hidden;">
+                         <div style="width: 50%; height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary));"></div>
+                      </div>
+                      <div style="display: flex; justify-content: space-between; font-size: 11px; margin-top: 4px; font-weight: 600;">
+                         <span>Terkumpul: RM 1,250</span>
+                         <span>Sasaran: RM 2,500</span>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn-primary" style="width: 100%; margin-top: 12px; padding: 8px; font-size: 13px;">Sumbang Sekarang (ToyyibPay)</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lost & Found Radar -->
+            <div class="glass-card">
+              <h2>Radar Haiwan Hilang / Ditemui</h2>
+              <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 16px;">Membantu menyatukan haiwan peliharaan dengan pemilik sah mereka.</p>
+              
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <!-- Lost Item -->
+                <div style="display: flex; gap: 12px; padding: 12px; border: 1px solid rgba(245, 158, 11, 0.3); border-radius: var(--radius-md); background: rgba(245, 158, 11, 0.05);">
+                  <div style="width: 60px; height: 60px; border-radius: var(--radius-sm); overflow: hidden; border: 2px solid var(--warning);">
+                    <img src="https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&w=100&q=80" style="width: 100%; height: 100%; object-fit: cover;">
+                  </div>
+                  <div>
+                    <h4 style="margin: 0; color: var(--warning); font-size: 14px;">HILANG: Kucing Parsi (Oreo)</h4>
+                    <p style="margin: 4px 0; font-size: 12px; color: var(--text-secondary);">Lokasi: USJ 11, Subang Jaya</p>
+                    <button class="btn-secondary" style="padding: 4px 8px; font-size: 11px; margin-top: 4px; border-color: var(--warning); color: var(--warning);">Lapor Penemuan</button>
+                  </div>
+                </div>
+
+                <!-- Found Item -->
+                <div style="display: flex; gap: 12px; padding: 12px; border: 1px solid rgba(16, 185, 129, 0.3); border-radius: var(--radius-md); background: rgba(16, 185, 129, 0.05);">
+                  <div style="width: 60px; height: 60px; border-radius: var(--radius-sm); overflow: hidden; border: 2px solid var(--success);">
+                    <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=100&q=80" style="width: 100%; height: 100%; object-fit: cover;">
+                  </div>
+                  <div>
+                    <h4 style="margin: 0; color: var(--success); font-size: 14px;">DITEMUI: Anjing Baka Mix</h4>
+                    <p style="margin: 4px 0; font-size: 12px; color: var(--text-secondary);">Kini berada di Shelter NGO. Ada mikrocip.</p>
+                    <button class="btn-primary" style="padding: 4px 8px; font-size: 11px; margin-top: 4px; background: var(--success);">Semak Tuntutan</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
   </div>
 
   <!-- --- MODAL 2: ADD FOOD LOG ENTRY --- -->

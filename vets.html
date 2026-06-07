@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🩺 PetData — Klinik Veterinar</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    /* Vet specific overrides */
+    .app-container {
+      --primary: hsl(172, 66%, 50%); /* Teal tint for medical */
+      --secondary: hsl(172, 30%, 20%);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- --- Sidebar Navigation --- -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <div class="logo-icon" style="background: linear-gradient(135deg, var(--primary), #0f766e);">🩺</div>
+        <div class="logo-text" id="clinic-name-display" style="font-size: 14px;">Klinik Vet</div>
+      </div>
+      
+      <nav class="nav-menu">
+        <div class="nav-item active" data-tab="vet-queue" id="nav-vet-queue">
+          <span class="nav-icon">📋</span>
+          <span>Pesakit Hari Ini</span>
+        </div>
+        <div class="nav-item" data-tab="vet-search" id="nav-vet-search">
+          <span class="nav-icon">🔍</span>
+          <span>Carian Rekod Pesakit</span>
+        </div>
+        <div class="nav-item vet-only" data-tab="vet-cert" id="nav-vet-cert">
+          <span class="nav-icon">🏅</span>
+          <span>Pengeluaran Sijil</span>
+        </div>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="theme-switch-container">
+          <span>Mod Cerah / Gelap</span>
+          <div class="theme-toggle" id="theme-toggle-btn"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- --- Main Display Area --- -->
+    <main class="main-window">
+      
+      <header class="top-header">
+        <div class="header-title-section">
+          <h1 id="page-title">Sistem Pengurusan Klinik</h1>
+          <p id="page-subtitle">Akses Rekod Perubatan Berpusat DVS.</p>
+        </div>
+        
+        <div class="header-controls">
+          <div class="user-profile-badge" style="display: flex; align-items: center; gap: 10px;">
+            <div class="user-avatar" id="user-avatar-display">--</div>
+            <div style="display: flex; flex-direction: column; line-height: 1.2;">
+              <span class="user-name" id="user-name-display" style="font-weight: 600;">Loading...</span>
+              <span id="user-role-display" style="font-size: 11px; font-weight: 600;">--</span>
+            </div>
+          </div>
+          <button id="logout-btn" class="btn-secondary" style="padding: 6px 12px; font-size: 12px; margin-left: 8px; border-color: rgba(239, 68, 68, 0.3); color: var(--danger);">Log Keluar</button>
+        </div>
+      </header>
+
+      <div class="content-body">
+        
+        <!-- SECTION: QUEUE -->
+        <section class="tab-pane active" id="tab-vet-queue">
+          <div class="dashboard-grid">
+            <div class="glass-card" style="grid-column: span 2;">
+              <h2>Senarai Temujanji & Walk-in Hari Ini</h2>
+              <div style="overflow-x: auto; margin-top: 16px;">
+                <table class="history-table" style="width: 100%;">
+                  <thead>
+                    <tr>
+                      <th>Masa</th>
+                      <th>Pesakit (Haiwan)</th>
+                      <th>Pemilik</th>
+                      <th>Tujuan</th>
+                      <th>Status</th>
+                      <th>Tindakan</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>09:00 AM</td>
+                      <td><strong>Oyen</strong> (Kucing)</td>
+                      <td>Ali Bin Abu</td>
+                      <td>Vaksinasi Tahunan</td>
+                      <td><span class="badge badge-green">Selesai</span></td>
+                      <td><button class="btn-secondary" style="padding: 4px 8px; font-size: 12px;" disabled>Lihat Rekod</button></td>
+                    </tr>
+                    <tr>
+                      <td>11:30 AM</td>
+                      <td><strong>Boba</strong> (Kucing Ragdoll)</td>
+                      <td>Engku Helmy</td>
+                      <td>Pemeriksaan Biasa</td>
+                      <td><span class="badge badge-yellow">Menunggu</span></td>
+                      <td><button class="btn-primary" style="padding: 4px 8px; font-size: 12px;">Panggil Masuk</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION: SEARCH -->
+        <section class="tab-pane" id="tab-vet-search">
+          <div class="glass-card" style="max-width: 600px; margin: 0 auto; text-align: center;">
+            <h2>Carian Rekod Perubatan Berpusat</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 24px;">Sila masukkan ID Pemilik, No Mikrocip, atau Nama Haiwan.</p>
+            <div style="display: flex; gap: 10px;">
+              <input type="text" class="form-control" placeholder="Cth: 920815105233 atau MCHIP-123" style="flex-grow: 1;">
+              <button class="btn-primary">🔍 Cari</button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="./auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Guard route: Only vet and nurse allowed
+      const currentUser = requireAuth(['vet', 'nurse']);
+      if (!currentUser) return; // Will redirect
+
+      // 2. Inject standard auth header UI
+      injectAuthHeader(currentUser);
+
+      // Add clinic name to sidebar if present
+      if (currentUser.clinic) {
+        document.getElementById('clinic-name-display').textContent = "Klinik: " + currentUser.clinic.replace("Klinik Veterinar Kerajaan", "KVK");
+      }
+
+      // 3. UI logic specific to Vet Doctor vs Nurse
+      if (currentUser.role === 'nurse') {
+        // Hide elements that only Doctors can do
+        document.querySelectorAll('.vet-only').forEach(el => el.style.display = 'none');
+      }
+
+      // Tab logic
+      const tabs = document.querySelectorAll('.nav-item');
+      const panes = document.querySelectorAll('.tab-pane');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          if(!tab.hasAttribute('data-tab')) return;
+          tabs.forEach(t => t.classList.remove('active'));
+          panes.forEach(p => p.classList.remove('active'));
+          tab.classList.add('active');
+          const target = document.getElementById('tab-' + tab.getAttribute('data-tab'));
+          if(target) target.classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

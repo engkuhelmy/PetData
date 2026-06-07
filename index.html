@@ -102,10 +102,14 @@
           </button>
           
           <!-- User Profile -->
-          <div class="user-profile-badge">
-            <div class="user-avatar">EH</div>
-            <span class="user-name">Engku Helmy</span>
+          <div class="user-profile-badge" style="display: flex; align-items: center; gap: 10px;">
+            <div class="user-avatar" id="user-avatar-display">--</div>
+            <div style="display: flex; flex-direction: column; line-height: 1.2;">
+              <span class="user-name" id="user-name-display" style="font-weight: 600;">Loading...</span>
+              <span id="user-role-display" style="font-size: 11px; font-weight: 600;">--</span>
+            </div>
           </div>
+          <button id="logout-btn" class="btn-secondary" style="padding: 6px 12px; font-size: 12px; margin-left: 8px; border-color: rgba(239, 68, 68, 0.3); color: var(--danger);">Log Keluar</button>
         </div>
       </header>
 
@@ -675,6 +679,17 @@
   </div>
 
   <!-- --- SCRIPTS --- -->
+  <script src="./auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Guard the route: Only 'user' role allowed here
+      const currentUser = requireAuth(['user']);
+      if (!currentUser) return; // Will redirect
+
+      // 2. Inject standard auth header UI (Name, Avatar, Role Badge, Logout)
+      injectAuthHeader(currentUser);
+    });
+  </script>
   <script src="./app.js"></script>
 </body>
 </html>

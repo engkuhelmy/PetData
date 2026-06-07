@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🛡️ PetData — Admin Dashboard</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    /* Admin specific overrides */
+    .app-container {
+      --primary: hsl(217, 91%, 60%); /* Blue tint for admin */
+      --secondary: hsl(217, 30%, 20%);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- --- Sidebar Navigation --- -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <div class="logo-icon" style="background: linear-gradient(135deg, var(--primary), #1e3a8a);">🛡️</div>
+        <div class="logo-text">Admin Panel</div>
+      </div>
+      
+      <nav class="nav-menu">
+        <div class="nav-item active" data-tab="admin-dash" id="nav-admin-dash">
+          <span class="nav-icon">📈</span>
+          <span>Ringkasan Keseluruhan</span>
+        </div>
+        <div class="nav-item" data-tab="admin-users" id="nav-admin-users">
+          <span class="nav-icon">👥</span>
+          <span>Pengurusan Pengguna</span>
+        </div>
+        <div class="nav-item" data-tab="admin-approval" id="nav-admin-approval">
+          <span class="nav-icon">✅</span>
+          <span>Kelulusan Pendaftaran</span>
+        </div>
+        <div class="nav-item" data-tab="admin-clinics" id="nav-admin-clinics">
+          <span class="nav-icon">🏥</span>
+          <span>Klinik & Veterinar</span>
+        </div>
+        <!-- Super Admin Only tabs -->
+        <div class="nav-item superadmin-only" data-tab="admin-audit" id="nav-admin-audit" style="display: none;">
+          <span class="nav-icon">📋</span>
+          <span>Log Audit Sistem</span>
+        </div>
+        <div class="nav-item superadmin-only" data-tab="admin-settings" id="nav-admin-settings" style="display: none;">
+          <span class="nav-icon">⚙️</span>
+          <span>Tetapan API DVS</span>
+        </div>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="theme-switch-container">
+          <span>Mod Cerah / Gelap</span>
+          <div class="theme-toggle" id="theme-toggle-btn"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- --- Main Display Area --- -->
+    <main class="main-window">
+      
+      <header class="top-header">
+        <div class="header-title-section">
+          <h1 id="page-title">Papan Pemuka Pentadbir</h1>
+          <p id="page-subtitle">Pusat kawalan utama PetData DVS.</p>
+        </div>
+        
+        <div class="header-controls">
+          <!-- Auth User Info Injection -->
+          <div class="user-profile-badge" style="display: flex; align-items: center; gap: 10px;">
+            <div class="user-avatar" id="user-avatar-display">--</div>
+            <div style="display: flex; flex-direction: column; line-height: 1.2;">
+              <span class="user-name" id="user-name-display" style="font-weight: 600;">Loading...</span>
+              <span id="user-role-display" style="font-size: 11px; font-weight: 600;">--</span>
+            </div>
+          </div>
+          <button id="logout-btn" class="btn-secondary" style="padding: 6px 12px; font-size: 12px; margin-left: 8px; border-color: rgba(239, 68, 68, 0.3); color: var(--danger);">Log Keluar</button>
+        </div>
+      </header>
+
+      <div class="content-body">
+        
+        <!-- SECTION: DASHBOARD -->
+        <section class="tab-pane active" id="tab-admin-dash">
+          <div class="widget-row" style="margin-bottom: 24px;">
+            <div class="glass-card metric-card">
+              <div class="metric-icon">👥</div>
+              <div class="metric-data">
+                <h3>Jumlah Pengguna Aktif</h3>
+                <div class="metric-value">12,450</div>
+              </div>
+            </div>
+            <div class="glass-card metric-card">
+              <div class="metric-icon">🐾</div>
+              <div class="metric-data">
+                <h3>Haiwan Berdaftar</h3>
+                <div class="metric-value">34,192</div>
+              </div>
+            </div>
+            <div class="glass-card metric-card">
+              <div class="metric-icon">🏥</div>
+              <div class="metric-data">
+                <h3>Klinik Panel DVS</h3>
+                <div class="metric-value">84</div>
+              </div>
+            </div>
+            <div class="glass-card metric-card">
+              <div class="metric-icon">⏳</div>
+              <div class="metric-data">
+                <h3>Menunggu Kelulusan</h3>
+                <div class="metric-value" style="color: var(--warning);">142</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="dashboard-grid">
+            <div class="glass-card">
+              <h3>Statistik Pendaftaran Bulanan</h3>
+              <div style="height: 250px; display: flex; align-items: center; justify-content: center; border: 1px dashed rgba(255,255,255,0.1); margin-top: 16px; border-radius: 8px;">
+                <span style="color: var(--text-secondary);">[ Carta Bar Pendaftaran - Ruang Mockup ]</span>
+              </div>
+            </div>
+            <div class="glass-card">
+              <h3>Notis Sistem Terkini</h3>
+              <ul style="padding-left: 20px; color: var(--text-secondary); margin-top: 16px; display: flex; flex-direction: column; gap: 12px;">
+                <li><strong>Update v1.2:</strong> Modul NFC telah dikemaskini.</li>
+                <li><strong>Penyelenggaraan:</strong> Vet Registry API downtime pada 15 Jun (2AM - 4AM).</li>
+                <li><strong>Laporan Kes:</strong> Peningkatan kes Sporo di daerah Klang. Alert dihantar ke klinik.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION: PENGGUNA -->
+        <section class="tab-pane" id="tab-admin-users">
+          <div class="glass-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+              <h2>Pengurusan Pengguna Sistem</h2>
+              <button class="btn-primary">➕ Tambah Pengguna</button>
+            </div>
+            
+            <div style="overflow-x: auto;">
+              <table class="history-table" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nama</th>
+                    <th>Email</th>
+                    <th>Peranan (Role)</th>
+                    <th>Tindakan</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>OW001</td>
+                    <td>Engku Helmy</td>
+                    <td>engkuhelmy@gmail.com</td>
+                    <td><span class="badge" style="background: var(--bg-tertiary);">Pet Owner</span></td>
+                    <td><button class="btn-secondary" style="padding: 4px 8px; font-size: 12px;">Edit</button></td>
+                  </tr>
+                  <tr>
+                    <td>VT001</td>
+                    <td>Dr. Fauzi Ahmad</td>
+                    <td>drfauzi@klinikvet.gov.my</td>
+                    <td><span class="badge" style="background: rgba(20, 184, 166, 0.2); color: #2dd4bf;">Veterinar</span></td>
+                    <td><button class="btn-secondary" style="padding: 4px 8px; font-size: 12px;">Edit</button></td>
+                  </tr>
+                  <tr>
+                    <td>PB001</td>
+                    <td>En. Razif Othman</td>
+                    <td>razif@pbt.gov.my</td>
+                    <td><span class="badge" style="background: rgba(249, 115, 22, 0.2); color: #fb923c;">PBT</span></td>
+                    <td><button class="btn-secondary" style="padding: 4px 8px; font-size: 12px;">Edit</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="./auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Guard route: Only superadmin and admin allowed
+      const currentUser = requireAuth(['superadmin', 'admin']);
+      if (!currentUser) return; // Will redirect
+
+      // 2. Inject standard auth header UI
+      injectAuthHeader(currentUser);
+
+      // 3. UI logic specific to Super Admin
+      if (currentUser.role === 'superadmin') {
+        document.querySelectorAll('.superadmin-only').forEach(el => {
+          el.style.display = 'flex';
+        });
+      }
+
+      // Simple tab switching logic for admin
+      const tabs = document.querySelectorAll('.nav-item');
+      const panes = document.querySelectorAll('.tab-pane');
+      
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          if(!tab.hasAttribute('data-tab')) return;
+          tabs.forEach(t => t.classList.remove('active'));
+          panes.forEach(p => p.classList.remove('active'));
+          
+          tab.classList.add('active');
+          const target = document.getElementById('tab-' + tab.getAttribute('data-tab'));
+          if(target) target.classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

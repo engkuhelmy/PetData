@@ -1,9 +1,14 @@
-const CACHE_NAME = 'petdata-v1';
+const CACHE_NAME = 'petdata-v2';
 const ASSETS = [
   './',
   './index.html',
+  './admin.html',
+  './vets.html',
+  './pbt.html',
+  './login.html',
   './style.css',
   './app.js',
+  './auth.js',
   './manifest.json'
 ];
 

@@ -157,6 +157,10 @@
             <span class="role-icon">🏛️</span>
             <span class="role-title">PBT Kawasan</span>
           </div>
+          <div class="role-card" data-role="ngo">
+            <span class="role-icon">🤝</span>
+            <span class="role-title">NGO / Penyelamat</span>
+          </div>
           <div class="role-card" data-role="admin">
             <span class="role-icon">🛡️</span>
             <span class="role-title">Pentadbir (Admin)</span>
@@ -203,6 +207,7 @@
           <tr><td>Vet Doctor</td><td>drfauzi</td><td>vet123</td></tr>
           <tr><td>Nurse</td><td>nurse1</td><td>nurse123</td></tr>
           <tr><td>PBT</td><td>pbtpetaling</td><td>pbt123</td></tr>
+          <tr><td>NGO Rescue</td><td>ngorescue</td><td>ngo123</td></tr>
         </table>
       </div>
     </div>
@@ -229,6 +234,7 @@
         'user': { u: 'owner', p: 'pet123' },
         'vet': { u: 'drfauzi', p: 'vet123' },
         'pbt': { u: 'pbtpetaling', p: 'pbt123' },
+        'ngo': { u: 'ngorescue', p: 'ngo123' },
         'admin': { u: 'superadmin', p: 'admin123' }
       };
 
@@ -246,6 +252,7 @@
             'user': 'Log Masuk Pemilik',
             'vet': 'Log Masuk Veterinar / Jururawat',
             'pbt': 'Log Masuk Pihak Berkuasa',
+            'ngo': 'Log Masuk NGO & Penyelamat',
             'admin': 'Log Masuk Pentadbir'
           };
           formTitle.textContent = titleMap[currentSelectedRole] || 'Log Masuk';

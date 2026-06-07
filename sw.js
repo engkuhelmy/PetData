@@ -1,10 +1,11 @@
-const CACHE_NAME = 'petdata-v2';
+const CACHE_NAME = 'petdata-v3';
 const ASSETS = [
   './',
   './index.html',
   './admin.html',
   './vets.html',
   './pbt.html',
+  './ngo.html',
   './login.html',
   './style.css',
   './app.js',

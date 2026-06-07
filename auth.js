@@ -10,7 +10,8 @@ const USERS_DB = [
   { id: "OW001", username: "owner",       password: "pet123",   role: "user",       name: "Engku Helmy",           email: "engkuhelmy@gmail.com",  avatar: "EH", clinic: null, area: null },
   { id: "VT001", username: "drfauzi",     password: "vet123",   role: "vet",        name: "Dr. Fauzi Ahmad",       email: "drfauzi@klinikvet.gov.my", avatar: "FA", clinic: "Klinik Veterinar Kerajaan Daerah Petaling", area: null },
   { id: "NS001", username: "nurse1",      password: "nurse123", role: "nurse",      name: "Jururawat Aida Zulkifli", email: "aida@klinikvet.gov.my", avatar: "AZ", clinic: "Klinik Veterinar Kerajaan Daerah Petaling", area: null },
-  { id: "PB001", username: "pbtpetaling", password: "pbt123",  role: "pbt",        name: "En. Razif Othman",      email: "razif@pbt.gov.my",      avatar: "RO", clinic: null, area: "Daerah Petaling, Selangor" }
+  { id: "PB001", username: "pbtpetaling", password: "pbt123",   role: "pbt",        name: "En. Razif Othman",      email: "razif@pbt.gov.my",      avatar: "RO", clinic: null, area: "Daerah Petaling, Selangor" },
+  { id: "NG001", username: "ngorescue",   password: "ngo123",   role: "ngo",        name: "Penyelamat Haiwan Malaysia", email: "contact@animalrescue.my", avatar: "PH", clinic: null, area: "Seluruh Negara" }
 ];
 
 // Role metadata for UI rendering
@@ -20,7 +21,8 @@ const ROLE_META = {
   user:       { label: "Pemilik Haiwan (Pet Owner)", color: "hsl(262, 83%, 60%)", bg: "rgba(139, 92, 246, 0.1)", icon: "🐾", dashboard: "index.html" },
   vet:        { label: "Doktor Veterinar",           color: "hsl(172, 66%, 50%)", bg: "rgba(20, 184, 166, 0.1)", icon: "🩺", dashboard: "vets.html" },
   nurse:      { label: "Jururawat Berdaftar",        color: "hsl(172, 66%, 50%)", bg: "rgba(20, 184, 166, 0.1)", icon: "💊", dashboard: "vets.html" },
-  pbt:        { label: "Pihak Berkuasa Tempatan",    color: "hsl(25, 95%, 53%)",  bg: "rgba(249, 115, 22, 0.1)", icon: "🏛️", dashboard: "pbt.html" }
+  pbt:        { label: "Pihak Berkuasa Tempatan",    color: "hsl(25, 95%, 53%)",  bg: "rgba(249, 115, 22, 0.1)", icon: "🏛️", dashboard: "pbt.html" },
+  ngo:        { label: "NGO & Penyelamat Haiwan",    color: "hsl(330, 81%, 60%)", bg: "rgba(236, 72, 153, 0.1)", icon: "🤝", dashboard: "ngo.html" }
 };
 
 /**

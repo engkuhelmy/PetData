@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🤝 PetData — Papan Pemuka NGO & Penyelamat</title>
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    /* NGO specific overrides */
+    .app-container {
+      --primary: hsl(330, 81%, 60%); /* Pink tint for NGO */
+      --secondary: hsl(330, 30%, 20%);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- --- Sidebar Navigation --- -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <div class="logo-icon" style="background: linear-gradient(135deg, var(--primary), #be185d);">🤝</div>
+        <div class="logo-text">NGO/Penyelamat</div>
+      </div>
+      
+      <nav class="nav-menu">
+        <div class="nav-item active" data-tab="ngo-awareness" id="nav-ngo-awareness">
+          <span class="nav-icon">📣</span>
+          <span>Kesedaran (Awareness)</span>
+        </div>
+        <div class="nav-item" data-tab="ngo-campaign" id="nav-ngo-campaign">
+          <span class="nav-icon">💖</span>
+          <span>Kempen Dana (Campaign)</span>
+        </div>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="theme-switch-container">
+          <span>Mod Cerah / Gelap</span>
+          <div class="theme-toggle" id="theme-toggle-btn"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- --- Main Display Area --- -->
+    <main class="main-window">
+      
+      <header class="top-header">
+        <div class="header-title-section">
+          <h1 id="page-title">Hab Penyelamat & Kebajikan Haiwan</h1>
+          <p id="page-subtitle" class="area-subtitle">Kawasan Operasi: Loading...</p>
+        </div>
+        
+        <div class="header-controls">
+          <div class="user-profile-badge" style="display: flex; align-items: center; gap: 10px;">
+            <div class="user-avatar" id="user-avatar-display">--</div>
+            <div style="display: flex; flex-direction: column; line-height: 1.2;">
+              <span class="user-name" id="user-name-display" style="font-weight: 600;">Loading...</span>
+              <span id="user-role-display" style="font-size: 11px; font-weight: 600;">--</span>
+            </div>
+          </div>
+          <button id="logout-btn" class="btn-secondary" style="padding: 6px 12px; font-size: 12px; margin-left: 8px; border-color: rgba(239, 68, 68, 0.3); color: var(--danger);">Log Keluar</button>
+        </div>
+      </header>
+
+      <div class="content-body">
+        
+        <!-- SECTION: AWARENESS -->
+        <section class="tab-pane active" id="tab-ngo-awareness">
+          
+          <!-- Summary Metrics -->
+          <div class="widget-row" style="margin-bottom: 24px;">
+            <div class="glass-card metric-card">
+              <div class="metric-icon">🚨</div>
+              <div class="metric-data">
+                <h3>Aduan Penganiayaan (Aktif)</h3>
+                <div class="metric-value" style="color: var(--danger);">8 <span style="font-size: 14px; font-weight: 400; color: var(--text-muted);">kes</span></div>
+              </div>
+            </div>
+            <div class="glass-card metric-card">
+              <div class="metric-icon">🔍</div>
+              <div class="metric-data">
+                <h3>Haiwan Hilang Dilapor</h3>
+                <div class="metric-value" style="color: var(--warning);">24 <span style="font-size: 14px; font-weight: 400; color: var(--text-muted);">ekor</span></div>
+              </div>
+            </div>
+            <div class="glass-card metric-card">
+              <div class="metric-icon">🏠</div>
+              <div class="metric-data">
+                <h3>Haiwan Ditemui (Shelter)</h3>
+                <div class="metric-value" style="color: var(--success);">15 <span style="font-size: 14px; font-weight: 400; color: var(--text-muted);">ekor</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <!-- Animal Abuse Reports -->
+            <div class="glass-card">
+              <h2>Senarai Aduan Penganiayaan Terkini</h2>
+              <div style="overflow-x: auto; margin-top: 16px;">
+                <table class="history-table" style="width: 100%;">
+                  <thead>
+                    <tr>
+                      <th>Tarikh Aduan</th>
+                      <th>Lokasi Kejadian</th>
+                      <th>Deskripsi / Bukti</th>
+                      <th>Status Pengendalian</th>
+                      <th>Tindakan NGO</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Hari Ini, 10:15 AM</td>
+                      <td>Pangsapuri Damai, PJ</td>
+                      <td>Kucing dikurung tanpa air/makanan berhari-hari.</td>
+                      <td><span class="badge badge-red">Kritikal (Belum Selesai)</span></td>
+                      <td><button class="btn-primary" style="padding: 4px 8px; font-size: 12px;">Hantar Pasukan</button></td>
+                    </tr>
+                    <tr>
+                      <td>Semalam, 04:30 PM</td>
+                      <td>Kawasan Perindustrian Shah Alam</td>
+                      <td>Anjing disimbah air panas oleh pekerja kilang.</td>
+                      <td><span class="badge badge-yellow">Dalam Siasatan / Lapor DVS</span></td>
+                      <td><button class="btn-secondary" style="padding: 4px 8px; font-size: 12px;">Kemaskini</button></td>
+                    </tr>
+                    <tr>
+                      <td>2 Hari Lepas</td>
+                      <td>Pasar Borong Selayang</td>
+                      <td>Ekor kucing dipotong. Bukti CCTV ada diserahkan.</td>
+                      <td><span class="badge badge-green">Kes Selesai (DVS Denda)</span></td>
+                      <td><button class="btn-secondary" style="padding: 4px 8px; font-size: 12px;">Lihat Laporan</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Lost & Found Radar -->
+            <div class="glass-card">
+              <h2>Radar Haiwan Hilang / Ditemui</h2>
+              <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 16px;">
+                
+                <!-- Lost Item -->
+                <div style="display: flex; gap: 12px; padding: 12px; border: 1px solid rgba(245, 158, 11, 0.3); border-radius: var(--radius-md); background: rgba(245, 158, 11, 0.05);">
+                  <div style="width: 60px; height: 60px; border-radius: var(--radius-sm); background: #333; overflow: hidden; border: 2px solid var(--warning);">
+                    <img src="https://images.unsplash.com/photo-1543852786-1cf6624b9987?auto=format&fit=crop&w=100&q=80" alt="Lost Cat" style="width: 100%; height: 100%; object-fit: cover;">
+                  </div>
+                  <div style="flex-grow: 1;">
+                    <div style="display: flex; justify-content: space-between;">
+                      <h4 style="margin: 0; color: var(--warning);">HILANG: Kucing Parsi (Oreo)</h4>
+                      <span style="font-size: 11px; color: var(--text-muted);">Dilapor: 2 jam lepas</span>
+                    </div>
+                    <p style="margin: 4px 0; font-size: 13px; color: var(--text-secondary);">Lokasi: USJ 11, Subang Jaya. Cip: MY-881-221-5555</p>
+                    <div style="display: flex; gap: 8px; margin-top: 6px;">
+                       <span class="badge badge-yellow">Sebarkan (Share)</span>
+                       <span class="badge" style="background: rgba(255,255,255,0.1);">Hubungi Pemilik</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Found Item -->
+                <div style="display: flex; gap: 12px; padding: 12px; border: 1px solid rgba(16, 185, 129, 0.3); border-radius: var(--radius-md); background: rgba(16, 185, 129, 0.05);">
+                  <div style="width: 60px; height: 60px; border-radius: var(--radius-sm); background: #333; overflow: hidden; border: 2px solid var(--success);">
+                    <img src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&w=100&q=80" alt="Found Dog" style="width: 100%; height: 100%; object-fit: cover;">
+                  </div>
+                  <div style="flex-grow: 1;">
+                    <div style="display: flex; justify-content: space-between;">
+                      <h4 style="margin: 0; color: var(--success);">DITEMUI / SELAMAT: Anjing Baka Mix</h4>
+                      <span style="font-size: 11px; color: var(--text-muted);">Dilapor: Semalam</span>
+                    </div>
+                    <p style="margin: 4px 0; font-size: 13px; color: var(--text-secondary);">Kini berada di Shelter kami. Sila semak imbas kod mikrocip.</p>
+                    <div style="display: flex; gap: 8px; margin-top: 6px;">
+                       <span class="badge badge-green">Tuntut Haiwan</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION: NEW CAMPAIGN (Fundraising) -->
+        <section class="tab-pane" id="tab-ngo-campaign">
+          <div class="widget-row" style="margin-bottom: 24px;">
+            <div class="glass-card" style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <h2>Pengurusan Kutipan Dana (Fundraising)</h2>
+                <p style="color: var(--text-secondary); font-size: 14px; margin-top: 4px;">Urus dan pantau kempen sumbangan awam untuk kos perubatan & operasi shelter.</p>
+              </div>
+              <button class="btn-primary" style="padding: 10px 20px;">+ Cipta Kempen Baharu</button>
+            </div>
+          </div>
+
+          <div class="widget-row">
+            <!-- Campaign Card 1 -->
+            <div class="glass-card">
+              <div style="width: 100%; height: 160px; border-radius: var(--radius-md); background: #333; overflow: hidden; margin-bottom: 16px;">
+                <img src="https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=400&q=80" alt="Kempen 1" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8);">
+              </div>
+              <h3 style="font-size: 16px; margin-bottom: 8px;">Dana Perubatan Pembedahan Kucing (Bubu)</h3>
+              <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Bubu mangsa langgar lari memerlukan RM2,500 untuk pembedahan ortopedik.</p>
+              
+              <div style="margin-bottom: 8px; display: flex; justify-content: space-between; font-size: 12px; font-weight: 600;">
+                <span>Terkumpul: RM 1,250</span>
+                <span style="color: var(--text-muted);">Sasaran: RM 2,500</span>
+              </div>
+              <!-- Progress Bar -->
+              <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; margin-bottom: 16px;">
+                <div style="width: 50%; height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); border-radius: 4px;"></div>
+              </div>
+              
+              <div style="display: flex; gap: 8px;">
+                <button class="btn-primary" style="flex-grow: 1; font-size: 13px; padding: 8px;">Keluarkan Dana</button>
+                <button class="btn-secondary" style="font-size: 13px; padding: 8px;">Edit</button>
+              </div>
+            </div>
+
+            <!-- Campaign Card 2 -->
+            <div class="glass-card">
+              <div style="width: 100%; height: 160px; border-radius: var(--radius-md); background: #333; overflow: hidden; margin-bottom: 16px;">
+                <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=400&q=80" alt="Kempen 2" style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8);">
+              </div>
+              <h3 style="font-size: 16px; margin-bottom: 8px;">Dana Makanan Shelter Bulanan (Jun 2026)</h3>
+              <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">Sumbangan kibbles dan wet food untuk 150 ekor anjing dan kucing terbiar.</p>
+              
+              <div style="margin-bottom: 8px; display: flex; justify-content: space-between; font-size: 12px; font-weight: 600;">
+                <span>Terkumpul: RM 4,800</span>
+                <span style="color: var(--text-muted);">Sasaran: RM 5,000</span>
+              </div>
+              <!-- Progress Bar -->
+              <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; margin-bottom: 16px;">
+                <div style="width: 96%; height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); border-radius: 4px;"></div>
+              </div>
+              
+              <div style="display: flex; gap: 8px;">
+                <button class="btn-primary" style="flex-grow: 1; font-size: 13px; padding: 8px;">Keluarkan Dana</button>
+                <button class="btn-secondary" style="font-size: 13px; padding: 8px;">Edit</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="./auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Guard route: Only NGO allowed
+      const currentUser = requireAuth(['ngo']);
+      if (!currentUser) return; // Will redirect
+
+      // 2. Inject standard auth header UI
+      injectAuthHeader(currentUser);
+      
+      if (currentUser.area) {
+        document.querySelector('.area-subtitle').textContent = "Kawasan Operasi: " + currentUser.area;
+      }
+
+      // Tab logic
+      const tabs = document.querySelectorAll('.nav-item');
+      const panes = document.querySelectorAll('.tab-pane');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          if(!tab.hasAttribute('data-tab')) return;
+          tabs.forEach(t => t.classList.remove('active'));
+          panes.forEach(p => p.classList.remove('active'));
+          tab.classList.add('active');
+          const target = document.getElementById('tab-' + tab.getAttribute('data-tab'));
+          if(target) target.classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>

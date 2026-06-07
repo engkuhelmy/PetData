@@ -1514,7 +1514,9 @@ a {
     background-color: var(--bg-secondary);
     border-top: 1px solid var(--border-color);
     padding: 10px 16px;
-    justify-content: space-around;
+    justify-content: flex-start;
+    overflow-x: auto;
+    gap: 16px;
     z-index: 100;
     box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
   }
@@ -1522,9 +1524,10 @@ a {
   .nav-item {
     flex-direction: column;
     gap: 4px;
-    padding: 8px;
+    padding: 8px 12px;
     font-size: 10px;
     border: none;
+    flex-shrink: 0;
   }
 
   .nav-item:hover {
@@ -1539,7 +1542,7 @@ a {
   }
 
   .nav-item span:last-child {
-    display: none; /* Hide labels on mobile bottom bar */
+    display: block; /* Show labels since we can scroll */
   }
 
   .sidebar-footer {

@@ -823,7 +823,7 @@ function setupTransferWizard() {
       transferData.email = document.getElementById('trans-owner-email').value;
       transferData.reason = document.getElementById('trans-reason').value;
       
-      showToast("Verifikasi IC berjaya ditemui via MyGovID", "success");
+      showToast("Verifikasi IC berjaya ditemui", "success");
       setTransferStep(2);
     });
   }

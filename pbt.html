@@ -75,7 +75,7 @@
             <div class="glass-card metric-card">
               <div class="metric-icon">🐾</div>
               <div class="metric-data">
-                <h3>Lesen Aktif</h3>
+                <h3>Lesen Anjing Aktif</h3>
                 <div class="metric-value" style="color: var(--success);">1,204</div>
               </div>
             </div>
@@ -89,7 +89,7 @@
             <div class="glass-card metric-card">
               <div class="metric-icon">📢</div>
               <div class="metric-data">
-                <h3>Aduan Terbiar Baru</h3>
+                <h3>Aduan Terbiar (Minggu Ini)</h3>
                 <div class="metric-value" style="color: var(--danger);">12</div>
               </div>
             </div>
@@ -102,10 +102,11 @@
                 <table class="history-table" style="width: 100%;">
                   <thead>
                     <tr>
-                      <th>Tarikh</th>
+                      <th>Tarikh & Masa</th>
                       <th>Lokasi Aduan</th>
-                      <th>Haiwan</th>
+                      <th>Spesies Haiwan</th>
                       <th>Status Tindakan</th>
+                      <th>Pengadu</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -114,12 +115,28 @@
                       <td>Taman Sri Muda, Seksyen 25</td>
                       <td>3 Anjing Liar</td>
                       <td><span class="badge badge-yellow">Dalam Siasatan</span></td>
+                      <td>Ahmad Z.</td>
                     </tr>
                     <tr>
                       <td>Semalam, 14:00 PM</td>
                       <td>Seksyen 7, Pusat Komersial</td>
                       <td>Kucing Cedera</td>
                       <td><span class="badge badge-green">Diselamatkan (NGO)</span></td>
+                      <td>Siti N.</td>
+                    </tr>
+                    <tr>
+                      <td>Kelmarin, 18:45 PM</td>
+                      <td>Kawasan Perumahan USJ 4</td>
+                      <td>Kawanan Anjing (5 ekor)</td>
+                      <td><span class="badge badge-red">Terima Laporan</span></td>
+                      <td>David L.</td>
+                    </tr>
+                    <tr>
+                      <td>Kelmarin, 09:10 AM</td>
+                      <td>Pasar Pagi Seksyen 16</td>
+                      <td>Anjing Berkeliaran</td>
+                      <td><span class="badge badge-green">Tangkapan Selesai</span></td>
+                      <td>MBSJ Ops</td>
                     </tr>
                   </tbody>
                 </table>
@@ -127,10 +144,64 @@
             </div>
             
             <div class="glass-card">
-              <h2>Peta Pematuhan (Heatmap Kawasan)</h2>
-              <div style="height: 200px; display: flex; align-items: center; justify-content: center; border: 1px dashed rgba(255,255,255,0.1); margin-top: 16px; border-radius: 8px;">
-                <span style="color: var(--text-secondary);">[ Peta GIS PBT - Ruang Mockup ]</span>
+              <h2>Peta Pematuhan Lesen (Daerah Petaling)</h2>
+              <div style="height: 300px; display: flex; align-items: center; justify-content: center; background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Map_of_Petaling_District%2C_Selangor.svg/400px-Map_of_Petaling_District%2C_Selangor.svg.png') no-repeat center center; background-size: contain; margin-top: 16px; border-radius: 8px; filter: grayscale(50%) opacity(0.8);">
               </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION: PEMATUHAN LESEN -->
+        <section class="tab-pane" id="tab-pbt-compliance">
+          <div class="glass-card">
+            <h2>Pemantauan Pematuhan Lesen Kawasan Anda</h2>
+            <div style="overflow-x: auto; margin-top: 16px;">
+              <table class="history-table" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th>Pemilik Berdaftar</th>
+                    <th>Nama Haiwan</th>
+                    <th>No. Mikrocip / Tag PBT</th>
+                    <th>Tarikh Tamat Lesen</th>
+                    <th>Status Lesen</th>
+                    <th>Tindakan</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Engku Helmy</td>
+                    <td>Boba (Kucing)</td>
+                    <td>MY-985-121-5544</td>
+                    <td>2027-05-10</td>
+                    <td><span class="badge badge-green">Sah (Aktif)</span></td>
+                    <td><button class="btn-secondary" style="padding: 4px 8px; font-size: 12px;">Lihat Rekod</button></td>
+                  </tr>
+                  <tr>
+                    <td>Lee Wei Meng</td>
+                    <td>Max (Anjing)</td>
+                    <td>PBT-MBPJ-9981</td>
+                    <td>2026-01-15</td>
+                    <td><span class="badge badge-red">Tamat Tempoh</span></td>
+                    <td><button class="btn-primary" style="padding: 4px 8px; font-size: 12px; background: var(--danger);">Keluarkan Saman</button></td>
+                  </tr>
+                  <tr>
+                    <td>Nurul Ain</td>
+                    <td>Comel (Kucing)</td>
+                    <td>MY-985-121-8812</td>
+                    <td>2026-07-22</td>
+                    <td><span class="badge badge-green">Sah (Aktif)</span></td>
+                    <td><button class="btn-secondary" style="padding: 4px 8px; font-size: 12px;">Lihat Rekod</button></td>
+                  </tr>
+                  <tr>
+                    <td>Ramesh Rao</td>
+                    <td>Rocky (Anjing)</td>
+                    <td>PBT-MBPJ-8824</td>
+                    <td>2026-06-01</td>
+                    <td><span class="badge badge-yellow">Tamat Tempoh (Grace Period)</span></td>
+                    <td><button class="btn-primary" style="padding: 4px 8px; font-size: 12px; background: var(--warning); color: black;">Notis Amaran</button></td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </section>

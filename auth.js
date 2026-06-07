@@ -106,3 +106,22 @@ window.getSessionUser = getSessionUser;
 window.requireAuth = requireAuth;
 window.injectAuthHeader = injectAuthHeader;
 window.ROLE_META = ROLE_META;
+
+// --- Global Theme Handler for all dashboards ---
+function initGlobalTheme() {
+  const savedTheme = localStorage.getItem('petdata_theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('theme-toggle-btn');
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('petdata_theme', newTheme);
+      });
+    }
+  });
+}
+initGlobalTheme();

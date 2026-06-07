@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐾 PetData — Identiti & Rekod Kesihatan Haiwan Digital</title>
+  
+  <!-- Manifest & PWA Tags -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#8B5CF6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PetData">
+  <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%238B5CF6'/><text x='50' y='65' font-size='50' text-anchor='middle'>🐾</text></svg>">
+  
+  <!-- SEO Meta -->
+  <meta name="description" content="Sistem pengurusan identiti digital dan kesihatan haiwan peliharaan bersepadu di bawah DVS Malaysia. Rekod vaksin, temujanji, pasport perjalanan, dan pindah hak milik digital.">
+  <meta property="og:title" content="PetData — Identiti & Rekod Kesihatan Haiwan Digital">
+  <meta property="og:description" content="Simpan profil, semak vaksinasi, urus pasport perjalanan, dan tempah rawatan klinik veterinar secara atas talian.">
+  <meta property="og:type" content="website">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- --- Sidebar Navigation --- -->
+    <aside class="sidebar">
+      <div class="logo-container">
+        <div class="logo-icon">🐾</div>
+        <div class="logo-text">PetData</div>
+      </div>
+      
+      <nav class="nav-menu">
+        <div class="nav-item active" data-tab="dashboard" id="nav-dashboard">
+          <span class="nav-icon">📊</span>
+          <span>Dashboard</span>
+        </div>
+        <div class="nav-item" data-tab="profile" id="nav-profile">
+          <span class="nav-icon">🐶</span>
+          <span>Profil Haiwan</span>
+        </div>
+        <div class="nav-item" data-tab="travel" id="nav-travel">
+          <span class="nav-icon">✈️</span>
+          <span>Vets Passport</span>
+        </div>
+        <div class="nav-item" data-tab="certificates" id="nav-certificates">
+          <span class="nav-icon">🏅</span>
+          <span>Sijil Digital</span>
+        </div>
+        <div class="nav-item" data-tab="appointments" id="nav-appointments">
+          <span class="nav-icon">📅</span>
+          <span>Temujanji</span>
+        </div>
+        <div class="nav-item" data-tab="transfer-nfc" id="nav-transfer-nfc">
+          <span class="nav-icon">🔄</span>
+          <span>Pindahan & NFC</span>
+        </div>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <div class="sync-status">
+          <div class="status-dot" id="sync-dot"></div>
+          <span id="sync-text">Sync: Vet API Online</span>
+        </div>
+        <div class="theme-switch-container">
+          <span>Mod Cerah / Gelap</span>
+          <div class="theme-toggle" id="theme-toggle-btn" aria-label="Tukar tema visual"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- --- Main Display Area --- -->
+    <main class="main-window">
+      
+      <!-- Top Sticky Header -->
+      <header class="top-header">
+        <div class="header-title-section">
+          <h1 id="page-title">Ringkasan Dashboard</h1>
+          <p id="page-subtitle">Semua maklumat kesihatan dan kemajuan semasa haiwan kesayangan anda.</p>
+        </div>
+        
+        <div class="header-controls">
+          <!-- Pet Switcher Dropdown -->
+          <div class="pet-selector-wrapper">
+            <button class="pet-select-btn" id="pet-switcher-trigger">
+              <div class="pet-avatar-mini" id="current-pet-avatar">🐱</div>
+              <span id="current-pet-name">Loading...</span>
+              <span>▼</span>
+            </button>
+            <div class="pet-switcher-dropdown" id="pet-switcher-dd">
+              <!-- Rendered Dynamically via JS -->
+              <div class="add-pet-dd-btn" id="add-pet-trigger">➕ Daftar Haiwan Baru</div>
+            </div>
+          </div>
+
+          <!-- Notification Bell -->
+          <button class="notif-btn" id="notif-btn-trigger" aria-label="Notifikasi">
+            <span>🔔</span>
+            <div class="notif-badge" id="notif-badge"></div>
+          </button>
+          
+          <!-- User Profile -->
+          <div class="user-profile-badge">
+            <div class="user-avatar">EH</div>
+            <span class="user-name">Engku Helmy</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Content Window -->
+      <div class="content-body">
+        
+        <!-- --- SECTION 1: DASHBOARD --- -->
+        <section class="tab-pane active" id="tab-dashboard">
+          <div class="dashboard-grid">
+            
+            <div class="dashboard-left">
+              <!-- Quick Stats row -->
+              <div class="widget-row">
+                <div class="glass-card metric-card">
+                  <div class="metric-icon">💉</div>
+                  <div class="metric-data">
+                    <h3>Status Vaksin</h3>
+                    <div class="metric-value" id="dash-vaccine-status"><span class="badge badge-green">Kemaskini</span></div>
+                  </div>
+                </div>
+                <div class="glass-card metric-card">
+                  <div class="metric-icon">⚖️</div>
+                  <div class="metric-data">
+                    <h3>Berat Terkini</h3>
+                    <div class="metric-value"><span id="dash-weight-value">--</span> <span class="metric-label">kg</span></div>
+                  </div>
+                </div>
+                <div class="glass-card metric-card">
+                  <div class="metric-icon">🛰️</div>
+                  <div class="metric-data">
+                    <h3>Nombor Mikrocip</h3>
+                    <div class="metric-value" id="dash-chip-value">--</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Weight Chart Widget -->
+              <div class="glass-card chart-widget">
+                <div class="chart-header">
+                  <span class="chart-title">Trend Berat Badan (Sejarah Log)</span>
+                  <div class="chart-controls">
+                    <button class="chart-btn" id="add-weight-log-btn">✍️ Log Berat</button>
+                  </div>
+                </div>
+                <div class="chart-container" id="weight-chart-holder">
+                  <!-- SVG Graph dynamically rendered here -->
+                </div>
+              </div>
+            </div>
+
+            <div class="dashboard-right">
+              <!-- Quick Identity Card -->
+              <div class="glass-card pet-identity-card">
+                <div class="pet-avatar-large-container">
+                  <div class="pet-avatar-large" id="dash-pet-avatar" style="font-size: 56px; display: flex; align-items: center; justify-content: center; background-color: var(--bg-tertiary);">🐱</div>
+                  <div class="pet-tag-indicator" id="dash-pet-gender-icon">♀️</div>
+                </div>
+                <h2 class="pet-name-large" id="dash-pet-name">--</h2>
+                <div class="pet-breed-large" id="dash-pet-breed">--</div>
+                <div class="pet-uuid" id="dash-pet-uuid">--</div>
+                
+                <div class="profile-quick-stats">
+                  <div class="stat-item">
+                    <h4>Tarikh Lahir</h4>
+                    <p id="dash-pet-dob">--</p>
+                  </div>
+                  <div class="stat-item">
+                    <h4>Ciri Fizikal</h4>
+                    <p id="dash-pet-colors">--</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Food Log Quick View -->
+              <div class="glass-card food-history-widget">
+                <div class="chart-header">
+                  <span class="chart-title">🍛 Rekod Makanan Terkini</span>
+                  <button class="chart-btn" id="add-food-log-btn" style="padding: 4px 8px;">➕ Tambah</button>
+                </div>
+                <div class="food-log-list" id="dash-food-logs-container">
+                  <!-- Dynamic render -->
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- --- SECTION 2: ANIMAL PROFILE --- -->
+        <section class="tab-pane" id="tab-profile">
+          <div class="dashboard-grid">
+            
+            <div class="dashboard-left">
+              <div class="glass-card">
+                <h2 style="margin-bottom: 20px;">Maklumat Pengenalan & Ciri Haiwan</h2>
+                <form id="pet-info-form" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                  <div class="form-group">
+                    <label for="prof-pet-name">Nama Haiwan</label>
+                    <input type="text" class="form-control" id="prof-pet-name" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="prof-pet-species">Spesies / Baka</label>
+                    <input type="text" class="form-control" id="prof-pet-species" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="prof-pet-gender">Jantina</label>
+                    <select class="form-control" id="prof-pet-gender">
+                      <option value="Jantan">Jantan (Male)</option>
+                      <option value="Betina">Betina (Female)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="prof-pet-dob">Tarikh Lahir (DOB)</label>
+                    <input type="date" class="form-control" id="prof-pet-dob" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="prof-pet-chip-no">Nombor Mikrocip</label>
+                    <input type="text" class="form-control" id="prof-pet-chip-no">
+                  </div>
+                  <div class="form-group">
+                    <label for="prof-pet-chip-color">Warna Mikrocip</label>
+                    <input type="text" class="form-control" id="prof-pet-chip-color">
+                  </div>
+                  <div class="form-group" style="grid-column: span 2;">
+                    <label for="prof-pet-physical">Warna & Ciri Fizikal</label>
+                    <input type="text" class="form-control" id="prof-pet-physical">
+                  </div>
+                  <div class="form-group" style="grid-column: span 2; display: flex; justify-content: flex-end; margin-top: 10px;">
+                    <button type="submit" class="btn-primary">💾 Simpan Kemaskini</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="dashboard-right">
+              <div class="glass-card">
+                <h3 style="margin-bottom: 16px;">Log Berat Badan Lengkap</h3>
+                <form id="weight-manual-form" style="display: flex; gap: 10px; margin-bottom: 16px;">
+                  <input type="number" step="0.1" class="form-control" id="weight-input-kg" placeholder="Berat (kg)" required style="flex-grow: 1;">
+                  <button type="submit" class="btn-primary" style="padding: 10px 16px;">Simpan</button>
+                </form>
+                <div style="max-height: 250px; overflow-y: auto;">
+                  <table class="history-table" style="width: 100%;">
+                    <thead>
+                      <tr>
+                        <th>Tarikh</th>
+                        <th>Berat (kg)</th>
+                      </tr>
+                    </thead>
+                    <tbody id="profile-weight-table-body">
+                      <!-- Render via JS -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- --- SECTION 3: TRAVEL HISTORY --- -->
+        <section class="tab-pane" id="tab-travel">
+          <div style="max-width: 800px; margin: 0 auto;">
+            <div class="glass-card" style="margin-bottom: 24px;">
+              <h2 style="margin-bottom: 12px;">✈️ Rekod Perjalanan (Vets Passport API)</h2>
+              <p style="font-size: 14px; color: var(--text-secondary);">
+                Menyemak sejarah perjalanan rentas sempadan bagi haiwan peliharaan anda yang telah didaftarkan dengan Jabatan Perkhidmatan Veterinar Malaysia (DVS).
+              </p>
+            </div>
+            
+            <div class="timeline" id="travel-timeline">
+              <!-- Timelines generated via JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- --- SECTION 4: CERTIFICATES --- -->
+        <section class="tab-pane" id="tab-certificates">
+          <div style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+            <div>
+              <h2>🏅 Vault Sijil Digital Rasmi</h2>
+              <p style="font-size: 14px; color: var(--text-secondary); margin-top: 4px;">Sijil digital sah berhubung terus dengan pangkalan data Vet Registry API.</p>
+            </div>
+            <button class="btn-primary" id="request-cert-btn">➕ Pohon Sijil Baru</button>
+          </div>
+
+          <div class="certs-grid" id="certs-container">
+            <!-- Render via JS -->
+          </div>
+        </section>
+
+        <!-- --- SECTION 5: APPOINTMENTS --- -->
+        <section class="tab-pane" id="tab-appointments">
+          <div class="appointment-booking-grid">
+            
+            <div class="glass-card">
+              <h2 style="margin-bottom: 20px;">📅 Tempah Temujanji Veterinar</h2>
+              <form id="appointment-booking-form">
+                <div class="form-group">
+                  <label for="apt-service">Jenis Temujanji</label>
+                  <select class="form-control" id="apt-service" required>
+                    <option value="Vaksinasi & Imunisasi">Vaksinasi & Imunisasi (Vaccine)</option>
+                    <option value="Pemeriksaan Kesihatan Biasa">Pemeriksaan Kesihatan Biasa (General Checkup)</option>
+                    <option value="Rawatan Penyakit / Sakit">Rawatan Penyakit / Sakit (Treatment)</option>
+                    <option value="Pembedahan / Neutering">Pembedahan / Sterilisasi (Surgery/Neutering)</option>
+                  </select>
+                </div>
+                
+                <div class="form-group">
+                  <label for="apt-clinic">Pilih Klinik Veterinar Kerajaan</label>
+                  <select class="form-control" id="apt-clinic" required>
+                    <option value="Klinik Veterinar Kerajaan Daerah Petaling">Klinik Veterinar Kerajaan Daerah Petaling</option>
+                    <option value="Jabatan Perkhidmatan Veterinar Negeri Selangor">Jabatan Perkhidmatan Veterinar Negeri Selangor (Shah Alam)</option>
+                    <option value="Klinik Veterinar Kerajaan Wilayah Persekutuan">Klinik Veterinar Kerajaan Wilayah Persekutuan (Cheras)</option>
+                    <option value="Klinik Veterinar Kerajaan Daerah Klang">Klinik Veterinar Kerajaan Daerah Klang</option>
+                  </select>
+                </div>
+
+                <div class="form-group" style="margin-top: 16px;">
+                  <label>Pilih Tarikh & Masa Slot</label>
+                  <div class="calendar-picker" style="margin-top: 8px;">
+                    <div class="calendar-header">
+                      <span id="cal-month-year">Jun 2026</span>
+                    </div>
+                    <div class="calendar-grid" id="cal-grid-days">
+                      <!-- Dynamically build days in JS -->
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 16px;">
+                  <label>Slot Masa Tersedia</label>
+                  <div class="slots-grid" id="slots-time-container">
+                    <!-- Rendered in JS -->
+                  </div>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; margin-top: 24px;">
+                  <button type="submit" class="btn-primary" id="btn-book-appointment">📅 Confirm Slot Booking</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="dashboard-right">
+              <div class="glass-card">
+                <h3 style="margin-bottom: 16px;">Temujanji Akan Datang</h3>
+                <div style="display: flex; flex-direction: column; gap: 12px;" id="upcoming-appointments-list">
+                  <!-- Dynamic items -->
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- --- SECTION 6: TRANSFER & NFC --- -->
+        <section class="tab-pane" id="tab-transfer-nfc">
+          <div class="dashboard-grid">
+            
+            <div class="dashboard-left">
+              <!-- Ownership Transfer Wizard -->
+              <div class="glass-card">
+                <h2 style="margin-bottom: 8px;">🔄 Pindahan Hak Milik (Ownership Transfer)</h2>
+                <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 24px;">Pindahkan profil haiwan secara sah kepada pemilik baru menggunakan pengesahan data MyGovID.</p>
+                
+                <div class="step-wizard">
+                  <div class="step-node active" id="step-node-1">
+                    <div class="step-circle">1</div>
+                    <span>Maklumat Baru</span>
+                  </div>
+                  <div class="step-node" id="step-node-2">
+                    <div class="step-circle">2</div>
+                    <span>Pengesahan PIN</span>
+                  </div>
+                  <div class="step-node" id="step-node-3">
+                    <div class="step-circle">3</div>
+                    <span>Selesai</span>
+                  </div>
+                </div>
+
+                <!-- Step 1 Content -->
+                <div id="transfer-step-1-content">
+                  <form id="transfer-initiate-form">
+                    <div class="form-group">
+                      <label for="trans-owner-ic">No. Kad Pengenalan (IC) Pemilik Baru</label>
+                      <input type="text" class="form-control" id="trans-owner-ic" placeholder="Cth: 920815105233" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="trans-owner-email">Alamat Email Pemilik Baru</label>
+                      <input type="email" class="form-control" id="trans-owner-email" placeholder="Cth: newowner@email.com" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="trans-reason">Sebab Pindahan</label>
+                      <textarea class="form-control" id="trans-reason" rows="3" placeholder="Sebab penyerahan pemilikan..." required></textarea>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; margin-top: 16px;">
+                      <button type="submit" class="btn-primary">Seterusnya ➡️</button>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- Step 2 Content -->
+                <div id="transfer-step-2-content" style="display: none; text-align: center; padding: 20px 0;">
+                  <p style="margin-bottom: 16px;">Sila masukkan **PIN Pengesahan Kripto** pemilik semasa untuk meluluskan pindahan ini.</p>
+                  <form id="transfer-pin-form" style="max-width: 300px; margin: 0 auto;">
+                    <div class="form-group">
+                      <input type="password" class="form-control" id="trans-pin-input" maxlength="6" placeholder="******" style="text-align: center; font-size: 24px; letter-spacing: 12px;" required>
+                    </div>
+                    <div style="display: flex; justify-content: center; gap: 12px; margin-top: 16px;">
+                      <button type="button" class="btn-secondary" id="btn-cancel-transfer">Batal</button>
+                      <button type="submit" class="btn-primary">Sahkan Transaksi 🔑</button>
+                    </div>
+                  </form>
+                </div>
+
+                <!-- Step 3 Content -->
+                <div id="transfer-step-3-content" style="display: none; text-align: center; padding: 30px 0;">
+                  <span style="font-size: 48px;">✅</span>
+                  <h3 style="margin-top: 16px;">Pindahan Selesai & Berjaya!</h3>
+                  <p style="font-size: 13px; color: var(--text-secondary); margin-top: 8px; max-width: 400px; margin-left: auto; margin-right: auto;">
+                    Sijil pemilikan baharu sedang dijana. Notifikasi pengesahan telah dihantar kepada pemilik baru melalui e-mel dan akaun MyGovID mereka.
+                  </p>
+                  <button type="button" class="btn-primary" id="btn-reset-transfer" style="margin: 24px auto 0 auto;">Selesai</button>
+                </div>
+              </div>
+
+              <!-- Ownership Log History -->
+              <div class="glass-card" style="margin-top: 24px;">
+                <h3>Rekod Log Pindahan Terdahulu (Audit Log)</h3>
+                <div style="overflow-x: auto;">
+                  <table class="history-table">
+                    <thead>
+                      <tr>
+                        <th>Tarikh</th>
+                        <th>Dari Pemilik</th>
+                        <th>Kepada Pemilik</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="transfer-history-tbody">
+                      <!-- Rendered dynamically -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="dashboard-right">
+              <!-- NFC Integration Panel -->
+              <div class="glass-card">
+                <div class="nfc-widget">
+                  <div class="nfc-status-info">
+                    <div class="nfc-badge-pulse" id="nfc-pulse-indicator">
+                      <div class="nfc-pulse-dot"></div>
+                      <span id="nfc-status-text">Collar Active</span>
+                    </div>
+                    <h3 style="margin-top: 8px;">IoT Collar Smart NFC</h3>
+                    <p style="font-size: 12px; color: var(--text-secondary); max-width: 200px;">
+                      Imbas tag kolar pintar untuk akses pantas profil awam bagi haiwan peliharaan.
+                    </p>
+                  </div>
+                  <button class="nfc-btn-toggle" id="btn-toggle-nfc">NFC Aktif</button>
+                </div>
+
+                <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+                  <div class="form-group">
+                    <label>UID Tag NFC Semasa</label>
+                    <div style="display: flex; gap: 8px;">
+                      <input type="text" class="form-control" id="nfc-uid-display" value="NTAG215_90A45F3C28" readonly style="flex-grow: 1; font-family: monospace; font-size: 13px;">
+                      <button class="btn-secondary" id="btn-re-register-nfc" style="padding: 10px 14px;">Edit</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="margin-top: 20px; padding: 12px; background-color: var(--bg-tertiary); border-radius: var(--radius-md); font-size: 12px;">
+                  <strong>💡 Mod Kecemasan (Lost Mode):</strong> Jika haiwan anda hilang, pastikan kolar NFC diaktifkan supaya orang awam yang mengimbas tag boleh menghubungi anda secara selamat tanpa mendedahkan data privasi.
+                </div>
+                
+                <button class="btn-secondary" id="btn-preview-public-profile" style="width: 100%; margin-top: 16px; font-weight: 600;">👁️ Lihat Profil Awam NFC</button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- --- NOTIFICATION BANNER CONTAINER --- -->
+  <div class="toast-container" id="toast-holder"></div>
+
+  <!-- --- MODAL 1: ADD / REGISTER NEW PET --- -->
+  <div class="modal-overlay" id="modal-add-pet">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">🐾 Daftar Profil Haiwan Baharu</h3>
+        <button class="modal-close" id="modal-add-pet-close">&times;</button>
+      </div>
+      <form id="add-pet-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="add-pet-name">Nama Haiwan</label>
+            <input type="text" class="form-control" id="add-pet-name" placeholder="Cth: Oyen" required>
+          </div>
+          <div class="form-group">
+            <label for="add-pet-species">Spesies / Baka</label>
+            <input type="text" class="form-control" id="add-pet-species" placeholder="Cth: Kucing Tabby, Golden Retriever" required>
+          </div>
+          <div class="form-group">
+            <label for="add-pet-gender">Jantina</label>
+            <select class="form-control" id="add-pet-gender">
+              <option value="Jantan">Jantan (Male)</option>
+              <option value="Betina">Betina (Female)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="add-pet-dob">Tarikh Lahir (DOB)</label>
+            <input type="date" class="form-control" id="add-pet-dob" required>
+          </div>
+          <div class="form-group">
+            <label for="add-pet-weight">Berat Awal (kg)</label>
+            <input type="number" step="0.1" class="form-control" id="add-pet-weight" placeholder="Cth: 4.2" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="modal-add-pet-cancel">Batal</button>
+          <button type="submit" class="btn-primary">Daftar Profil 💾</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- --- MODAL 2: ADD FOOD LOG ENTRY --- -->
+  <div class="modal-overlay" id="modal-food-log">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">🍛 Tambah Sejarah Makanan</h3>
+        <button class="modal-close" id="modal-food-log-close">&times;</button>
+      </div>
+      <form id="add-food-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="food-type">Kategori Makanan</label>
+            <select class="form-control" id="food-type" required>
+              <option value="dry">Makanan Kering (Dry Food)</option>
+              <option value="wet">Makanan Basah (Wet Food)</option>
+              <option value="raw">Makanan Mentah (Raw Diet)</option>
+              <option value="supplement">Suplemen / Vitamin</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="food-brand">Jenama & Nama Makanan</label>
+            <input type="text" class="form-control" id="food-brand" placeholder="Cth: Royal Canin Fit 32" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="modal-food-log-cancel">Batal</button>
+          <button type="submit" class="btn-primary">Simpan Log 💾</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- --- MODAL 3: CERTIFICATE PRINT PREVIEW / QR VERIFICATION --- -->
+  <div class="modal-overlay" id="modal-cert-viewer">
+    <div class="modal-content" style="max-width: 650px;">
+      <div class="modal-header">
+        <h3 class="modal-title" id="cert-viewer-title">Sijil Digital Pendaftaran</h3>
+        <button class="modal-close" id="modal-cert-viewer-close">&times;</button>
+      </div>
+      <div class="modal-body" id="cert-printable-area" style="padding: 30px; font-family: 'Outfit', sans-serif;">
+        <!-- Printable / visual design system cert -->
+        <div style="border: 4px double var(--primary); padding: 24px; border-radius: 12px; background-color: var(--bg-secondary); position: relative;">
+          <!-- Badge overlay -->
+          <div style="position: absolute; top: 20px; right: 20px; text-align: center;">
+            <div id="cert-qr-holder" style="background: white; padding: 6px; border-radius: 8px; display: inline-block; margin-bottom: 4px;">
+              <!-- Placeholder QR -->
+              <svg width="64" height="64" viewBox="0 0 100 100" fill="black"><rect width="10" height="10" x="5" y="5"/><rect width="10" height="10" x="85" y="5"/><rect width="10" height="10" x="5" y="85"/><rect width="5" height="5" x="20" y="20"/><rect width="5" height="5" x="40" y="40"/><rect width="10" height="5" x="60" y="70"/><rect width="5" height="10" x="75" y="20"/><rect width="5" height="5" x="20" y="70"/><rect width="10" height="10" x="50" y="10"/><rect width="5" height="5" x="80" y="80"/></svg>
+            </div>
+            <div style="font-size: 8px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">SCAN TO VERIFY</div>
+          </div>
+          
+          <div style="text-align: center; margin-bottom: 24px;">
+            <span style="font-size: 36px;">🇲🇾</span>
+            <h2 style="font-size: 18px; letter-spacing: 1px; color: var(--text-primary); margin-top: 6px; font-weight: 800;">JABATAN PERKHIDMATAN VETERINAR MALAYSIA</h2>
+            <p style="font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">State Veterinary Services Department</p>
+          </div>
+          
+          <div style="margin-bottom: 16px; text-align: center;">
+            <h1 id="cert-title-internal" style="font-size: 20px; font-weight: 800; color: var(--primary);">SIJIL PENDAFTARAN HAIWAN KESAYANGAN</h1>
+            <p style="font-size: 11px; color: var(--text-muted); font-family: monospace;" id="cert-id-internal">ID: PD-REG-88C15A</p>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; font-size: 13px; border-top: 1px solid var(--border-color); padding-top: 16px;">
+            <div>
+              <span style="color: var(--text-muted); font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">NAMA HAIWAN</span>
+              <strong id="cert-pet-name-internal">--</strong>
+            </div>
+            <div>
+              <span style="color: var(--text-muted); font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">SPESIES / BAKA</span>
+              <strong id="cert-breed-internal">--</strong>
+            </div>
+            <div>
+              <span style="color: var(--text-muted); font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">JANTINA / DOB</span>
+              <strong id="cert-gender-dob-internal">--</strong>
+            </div>
+            <div>
+              <span style="color: var(--text-muted); font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">NO. MIKROCIP</span>
+              <strong id="cert-chip-internal">--</strong>
+            </div>
+          </div>
+          
+          <div style="margin-top: 20px; font-size: 12px; border-top: 1px solid var(--border-color); padding-top: 16px; text-align: center;">
+            <span style="color: var(--text-muted); font-size: 11px; text-transform: uppercase; display: block; margin-bottom: 2px;">PEMILIK BERDAFTAR</span>
+            <strong style="font-size: 14px; color: var(--text-primary);">ENGKU HELMY BIN ENGKU MUSA</strong>
+          </div>
+
+          <div style="margin-top: 24px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 11px; color: var(--text-muted);">
+            <div>
+              <span>Tarikh Dikeluarkan: <strong id="cert-issue-date">02/06/2026</strong></span><br>
+              <span>Sah Sehingga: <strong id="cert-expiry-date">Kekal</strong></span>
+            </div>
+            <div style="text-align: right;">
+              <span style="display: block; font-family: monospace; font-size: 9px; color: var(--success);">DIGITALLY SIGNED BY DVS VET REGISTRY</span>
+              <span style="font-size: 8px;">Key Hash: SHA256_88C15A...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" id="modal-cert-viewer-close-btn">Tutup</button>
+        <button type="button" class="btn-primary" id="btn-print-certificate">🖨️ Cetak / Muat Turun PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- --- MODAL 4: PUBLIC MINI-PROFILE PREVIEW (NFC SIMULATOR) --- -->
+  <div class="modal-overlay" id="modal-public-profile">
+    <div class="modal-content" style="max-width: 420px; border-color: var(--secondary);">
+      <div class="modal-header" style="border-bottom-color: var(--border-color);">
+        <h3 class="modal-title">📡 NFC Tag Mini-Profil Awam</h3>
+        <button class="modal-close" id="modal-public-close">&times;</button>
+      </div>
+      <div class="modal-body" style="text-align: center; padding: 24px;">
+        <div style="width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--secondary); margin: 0 auto 16px auto; font-size: 40px; display: flex; align-items: center; justify-content: center; background-color: var(--bg-tertiary);" id="pub-avatar">🐱</div>
+        
+        <h2 id="pub-pet-name">--</h2>
+        <span class="badge badge-green" id="pub-status" style="margin-top: 8px;">STATUS: SIHAT</span>
+        
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 24px; text-align: left; background-color: var(--bg-tertiary); padding: 16px; border-radius: var(--radius-md); font-size: 13px; border: 1px solid var(--border-color);">
+          <div><strong>🧬 Spesies / Baka:</strong> <span id="pub-breed">--</span></div>
+          <div><strong>🎨 Ciri Fizikal:</strong> <span id="pub-colors">--</span></div>
+          <div><strong>🛰️ No. Mikrocip:</strong> <span id="pub-chip" style="font-family: monospace;">--</span></div>
+          <div><strong>📞 Hubungi Pemilik:</strong> <span id="pub-contact">Engku Helmy (+6019-XXXX882)</span></div>
+        </div>
+
+        <div style="margin-top: 24px;" id="report-found-section">
+          <button class="btn-primary" id="btn-report-found" style="width: 100%; background: linear-gradient(135deg, var(--danger), #dc2626); box-shadow: 0 4px 15px rgba(239,68,68,0.2);">📢 Laporkan Haiwan Ini Jumpa / Hilang</button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" id="modal-public-close-btn" style="width: 100%;">Tutup Simulasi Scan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- --- SCRIPTS --- -->
+  <script src="./app.js"></script>
+</body>
+</html>
